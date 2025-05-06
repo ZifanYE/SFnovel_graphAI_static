@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Static Novel Demo</title>
+  <script defer src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script defer src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script defer src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-black text-white">
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function App() {
+      const [issue, setIssue] = useState("war");
+      const [characters, setCharacters] = useState([]);
+      const [selectedCharacter, setSelectedCharacter] = useState("");
+      const [message, setMessage] = useState("");
+      const [story, setStory] = useState("");
+      const [coverUrl, setCoverUrl] = useState("");
+
+      function generateGraph() {
+        setMessage("已删除Novel节点，生成新Novel节点。");
+      }
+
+      function startStory() {
+        setStory(`Title: "Shadows of the Protocol: War in the Age of Echoes"
+
+Chapter 1: The Static War
+
+Suziki watches a drone-strike simulation while classical poetry plays in the background. The battlefield is no longer physical—it’s a space of algorithms and predictive logic. He’s disturbed: real death, real people, but invisible consequences.
+
+...（内容省略）...
+
+Reflection on the AP Society:
+
+In AP society, war is not caused by hatred alone—but by failure to translate personal discomfort into institutional feedback. The key is the circular flow: EverydayExperience must question, Institutions must listen, Technology must enable empathy, and Society must reflect. In this story, Suziki’s transformation embodies that recursive shift—a soldier who learned that true leadership starts not from command, but from critique.
+        `);
+        setCoverUrl("https://oaidalleapiprodscus.blob.core.windows.net/private/org-frg24iQMHWOlgi0tryjCshVm/user-pSovLkHn4MnBkfvZPvM38vfT/img-oGhxN8GWHTnik6EMOtxKwLXx.png?...");
+      }
+
+      function importGraph() {
+        setCharacters([
+          {
+            name: "Suziki",
+            age: 45,
+            role: "Military Leader",
+            imageUrl: "https://oaidalleapiprodscus.blob.core.windows.net/private/...Suziki.png"
+          },
+          {
+            name: "Yoshida",
+            age: 32,
+            role: "Field Medic",
+            imageUrl: "https://oaidalleapiprodscus.blob.core.windows.net/private/...Yoshida.png"
+          },
+          {
+            name: "Akiko",
+            age: 28,
+            role: "Tech Specialist",
+            imageUrl: "https://oaidalleapiprodscus.blob.core.windows.net/private/...Akiko.png"
+          }
+        ]);
+      }
+
+      return (
+        <div className="min-h-screen text-white flex flex-col items-center justify-start p-8 space-y-6">
+          <h1 className="text-4xl font-bold mt-8 text-center">🚀 Static Novel Demo 🚀</h1>
+          <input
+            type="text"
+            value={issue}
+            onChange={(e) => setIssue("war")}
+            placeholder="Enter social issue..."
+            className="border-2 border-gray-600 bg-gray-800 p-3 rounded w-full max-w-xl"
+          />
+          <div className="flex space-x-4 mt-4">
+            <button onClick={generateGraph} className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded">
+              Generate Graph
+            </button>
+            <button onClick={importGraph} className="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded">
+              Import Graph
+            </button>
+          </div>
+
+          {message && <p className="text-green-400 mt-4">{message}</p>}
+
+          {characters.length > 0 && (
+            <div className="mt-10 w-full max-w-6xl">
+              <h2 className="text-2xl mb-6 text-center">Select Your Character</h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+                {characters.map((char) => (
+                  <div key={char.name} className="bg-gray-800 p-4 rounded">
+                    <img src={char.imageUrl} alt={char.name} className="w-full h-48 object-cover rounded mb-2" />
+                    <div className="font-bold">{char.name}</div>
+                    <div className="text-sm">Age: {char.age}</div>
+                    <div className="text-sm">Role: {char.role}</div>
+                    <label className="mt-2 inline-flex items-center">
+                      <input
+                        type="radio"
+                        name="character"
+                        value={char.name}
+                        checked={selectedCharacter === char.name}
+                        onChange={(e) => setSelectedCharacter(e.target.value)}
+                        className="mr-2"
+                      />
+                      Select
+                    </label>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-6 text-center">
+                <button onClick={startStory} className="bg-green-500 hover:bg-green-600 px-8 py-3 rounded text-white">
+                  Start Story Generation
+                </button>
+              </div>
+            </div>
+          )}
+
+          {coverUrl && story && (
+            <div className="mt-10 w-[400px] h-[600px] bg-white rounded-xl overflow-hidden shadow-lg">
+              <div className="h-[500px]">
+                <img src={coverUrl} alt="cover" className="w-full h-full object-cover" />
+              </div>
+              <div className="h-[100px] bg-gray-200 text-black px-4 py-3 flex items-center justify-center">
+                <h2 className="text-xl font-bold text-center">
+                  {story.match(/Title:\s*(.+?)\n/)?.[1] || "Untitled"}
+                </h2>
+              </div>
+            </div>
+          )}
+
+          {story && (
+            <div className="mt-10 w-full max-w-3xl bg-gray-900 p-6 rounded">
+              <h2 className="text-2xl mb-4">🌌 Story Generated</h2>
+              <pre className="text-gray-300 whitespace-pre-wrap">{story}</pre>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
