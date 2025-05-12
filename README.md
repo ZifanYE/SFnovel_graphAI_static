@@ -6,5 +6,3 @@ You can find the real-time vesion of the source code: https://github.com/ZifanYE
 
 
 
-real-time demo link: 
-https://s-fnovel-graph-ai.vercel.app/
