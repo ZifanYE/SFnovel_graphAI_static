@@ -5,7 +5,7 @@ Here is the static demo version for this SFnovel_graph project, providing some r
 You can find the real-time vesion of the source code: https://github.com/ZifanYE/SFnovel_graphAI
 
 
-You can find my example AP database in ./AP_example/neo4j.dump, which you can import it into your neo4j project.
+You can find my example AP database in ./AP-example/neo4j.dump, which you can import it into your neo4j project.
 
 
 
